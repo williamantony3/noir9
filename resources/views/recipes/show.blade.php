@@ -7,11 +7,10 @@
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-white d-inline-block mb-0">Data User</h6>
+              <h6 class="h2 text-white d-inline-block mb-0">Recipes</h6>
             </div>
             <div class="col-lg-6 col-5 text-right">
-                <a href="#" class="btn btn-sm btn-neutral">Export All User Data</a>
-                <a href="{{ route('addRecipes') }}" class="btn btn-sm btn-neutral">Tambah User</a>
+                <a href="{{ route('addRecipes') }}" class="btn btn-sm btn-secondary">Add Recipe</a>
             </div>
             <br><br>
             <div class="col-lg-12 col-12">
@@ -38,29 +37,25 @@
             <div class="table-responsive py-4">
               <table class="table table-flush" id="datatable-basic">
                 <thead class="thead-light">
-                  <tr>
-                    <th>Username</th>
-                    <th>Nama</th>
-                    <th>Level</th>
-                    <th>Aksi</th>
+                  <tr class="text-center">
+                    <th>No</th>
+                    <th>Client's Name</th>
+                    <th>Flavour</th>
+                    <th>Nic Strength (mg)</th>
+                    <th>Volume (ml)</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
-                <tfoot>
-                  <tr>
-                    <th>Username</th>
-                    <th>Nama</th>
-                    <th>Level</th>
-                    <th>Aksi</th>
-                  </tr>
-                </tfoot>
                 <tbody>
                   <tr>
-                    <td>tes</td>
-                    <td>tes</td>
-                    <td>tes</td>
-                    <td><a href="#"><button type="button" class="btn btn-warning btn-sm">Ubah</button></a> <a href="#"><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal#">Hapus</button></a></td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">8 Circles</td>
+                    <td class="text-center">Grape Salt</td>
+                    <td class="text-right">25</td>
+                    <td class="text-right">25</td>
+                    <td class="text-center"><a href="#"><button type="button" class="btn btn-warning btn-sm">Edit</button></a> <a href="#"><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">Delete</button></a></td>
                     <!-- Modal -->
-                    <div class="modal fade" id="exampleModal#" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
