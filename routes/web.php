@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\RecipesController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\IngredientsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +16,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [RecipesController::class, 'show'])->name('showRecipes');
 Route::get('/recipes/add', [RecipesController::class, 'add'])->name('addRecipes');
+Route::get('/ingredients',[IngredientsController::class,'show'])->name('showIngredients');
+Route::get('/ingredients/add',[IngredientsController::class,'add'])->name('addIngredients');
+Route::post('/ingredients/addIngredients',[IngredientsController::class,'store'])->name('addIngredientsDetail');
