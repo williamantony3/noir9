@@ -7,7 +7,7 @@
   <meta name="description" content="Noir">
   <meta name="author" content="William Antony">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>Noir</title>
+  <title>NOIR</title>
   <!-- Favicon -->
   <link rel="icon" href="/img/brand/favicon.png" type="image/x-icon">
   <!-- Fonts -->
@@ -30,8 +30,9 @@
     <div class="scrollbar-inner">
       <!-- Brand -->
       <div class="sidenav-header d-flex align-items-center">
-        <a href="{{ route('showRecipes') }}" class="navbar-brand">
-        <img src="/img/brand/logo.jpg" alt="" srcset="" style="width: 50px; height: 33px;">
+        <a class="navbar-brand">
+        <!-- <img src="/img/brand/logo.jpg" alt="" srcset="" style="width: 50px; height: 33px;"> -->
+        Menu
         </a>
         <div class="ml-auto">
           <!-- Sidenav toggler -->
