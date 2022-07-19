@@ -10,7 +10,7 @@ class IngredientsController extends Controller
 {
     public function show(){
         $ingredientsList = Ingredients::all();
-        return view('ingredients.show',$ingredientsList);
+        return view('ingredients.show',compact('ingredientsList'));
     }
     public function add(){
         return view('ingredients.add');
