@@ -81,7 +81,7 @@
                             Anda yakin ingin melakukan ini?
                           </div>
                           <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
+                            <a href="{{ route('showIngredients') }}"><button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button></a>
                             <a href="{{ route('deleteIngredients',$ing)}}"><button type="button" class="btn btn-danger">Hapus</button></a>
                           </div>
                         </div>

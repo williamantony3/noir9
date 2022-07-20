@@ -58,7 +58,7 @@
                 </div>
                 <div class="form-group">
                   <input type="submit" value="Save" class="btn btn-primary">
-                  <input type="reset" value="Cancel" class="btn btn-danger">
+                  <a href="{{ route('showIngredients') }}"><input type="button" value="Cancel" class="btn btn-danger"></a>
                 </div>
               </form>
             </div>
