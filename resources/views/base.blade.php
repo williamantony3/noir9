@@ -9,7 +9,7 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>NOIR</title>
   <!-- Favicon -->
-  <link rel="icon" href="/img/brand/favicon.png" type="image/x-icon">
+  <link rel="icon" href="/img/brand/logo.jpg" type="image/x-icon">
   <!-- Fonts -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
   <!-- Icons -->
