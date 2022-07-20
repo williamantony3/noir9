@@ -21,7 +21,29 @@ class IngredientsController extends Controller
             'price'=> 'required|numeric'
         ]);
         Ingredients::create($validatedData);
-        $request->session()->flash('success', 'Success adding ingredients');
+        $request->session()->flash('success', 'Success adding ingredient');
+        return redirect('/ingredients');
+    }
+
+    public function edit(Ingredients $ing){
+        return view('ingredients.update',['ing'=> $ing]);
+    }
+
+    public function update(Request $request, Ingredients $ing){
+        $upIng = $ing;
+        $validatedData =$request->validate([
+            'name'=>'required|max:60',
+            'price'=> 'required|numeric'
+        ]);
+        // dd($request->id, $upIng->id, $validatedData);
+        Ingredients::where('id',$upIng->id)->update($validatedData);
+        $request->session()->flash('editsuccess', 'Success edit ingredient');
+        return redirect('/ingredients');
+    }
+    public function destroy(Ingredients $ing, Request $request){
+        $delIng = $ing;
+        $request->session()->flash('deletesuccess', 'Success deleting Ingredient');
+        Ingredients::destroy($delIng->id);
         return redirect('/ingredients');
     }
 }

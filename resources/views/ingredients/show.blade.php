@@ -24,6 +24,16 @@
                     <div>{{Session::get('success')}}</div>
                 </div>
             @endif
+            @if(\Session::has('deletesuccess'))
+            <div class="alert alert-success">
+                <div>{{Session::get('deletesuccess')}}</div>
+            </div>
+        @endif
+        @if(\Session::has('editsuccess'))
+            <div class="alert alert-success">
+                <div>{{Session::get('editsuccess')}}</div>
+            </div>
+        @endif
             </div>
           </div>
         </div>
@@ -45,15 +55,18 @@
                   </tr>
                 </thead>
                 <tbody>
-                  
+                    @php
+                        $rowNum = 1;
+                    @endphp
                     @foreach ($ingredientsList as $ing)
                     <tr>
-                    <td class="text-center">{{ $ing['id'] }}</td>
+                    <td class="text-center">{{ $rowNum++ }} </td>
+                    
                     <td class="text-center">{{ $ing['name'] }}</td>
                     <td class="text-center">{{ $ing['price'] }}</td>
-                    <td class="text-center"><a href="#"><button type="button" class="btn btn-warning btn-sm">Edit</button></a> <a href="#"><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">Delete</button></a></td>
+                    <td class="text-center"><a href="{{ route('editIngredients', $ing) }}"><button type="button" class="btn btn-warning btn-sm">Edit</button></a> <a href="#"><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">Delete</button></a></td>
                     </tr>
-                    @endforeach
+                    
                     <!-- Modal -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog modal-dialog-centered" role="document">
@@ -69,12 +82,13 @@
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                            <a href="#"><button type="button" class="btn btn-danger">Hapus</button></a>
+                            <a href="{{ route('deleteIngredients',$ing)}}"><button type="button" class="btn btn-danger">Hapus</button></a>
                           </div>
                         </div>
                       </div>
                     </div>
                   </tr>
+                  @endforeach
                 </tbody>
               </table>
             </div>
