@@ -56,9 +56,9 @@
                   <label for="price" class="form-control-label">Price</label>
                   <input class="form-control" type="number" id="price" name="price" min='1000' required autofocus value="{{ $ing->price }}"/>
                 </div>
-                <div class="form-group">
-                  <input type="submit" value="Save" class="btn btn-primary">
+                <div class="form-group float-right">
                   <a href="{{ route('showIngredients') }}"><input type="button" value="Cancel" class="btn btn-danger"></a>
+                  <input type="submit" value="Save" class="btn btn-primary">
                 </div>
               </form>
             </div>
