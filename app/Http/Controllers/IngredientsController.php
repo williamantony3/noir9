@@ -46,4 +46,12 @@ class IngredientsController extends Controller
         Ingredients::destroy($delIng->id);
         return redirect('/ingredients');
     }
+    public function autocomplete(){
+        $ingredientsList = Ingredients::all();
+        return response()->json(['ingredientsList' => $ingredientsList]);
+    }
+    public function search(Request $request){
+        $ingredient = Ingredients::find($request->ingredientsId);
+        return response()->json(['ingredient' => $ingredient]);
+    }
 }

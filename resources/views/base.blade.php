@@ -31,8 +31,8 @@
       <!-- Brand -->
       <div class="sidenav-header d-flex align-items-center">
         <a class="navbar-brand">
-        <!-- <img src="/img/brand/logo.jpg" alt="" srcset="" style="width: 50px; height: 33px;"> -->
-        Menu
+          <!-- <img src="/img/brand/logo.jpg" alt="" srcset="" style="width: 50px; height: 33px;"> -->
+          Menu
         </a>
         <div class="ml-auto">
           <!-- Sidenav toggler -->
@@ -89,7 +89,7 @@
           <ul class="navbar-nav align-items-center ml-auto ml-md-0">
             <li class="nav-item">
               <div class="media align-items-center">
-          <img src="/img/brand/logo.jpg" alt="" srcset="" style="width: 50px; height: 33px;">
+                <img src="/img/brand/logo.jpg" alt="" srcset="" style="width: 50px; height: 33px;">
                 <div class="media-body ml-2 d-none d-lg-block">
                   <span class="mb-0 text-sm  font-weight-bold"></span>
                 </div>
@@ -125,7 +125,103 @@
   <script src="/vendor/select2/dist/js/select2.min.js"></script>
   <!-- Argon JS -->
   <script src="/js/argon.min-v=1.0.0.js"></script>
-  </head>
+  <script>
+    $(document).ready(function() {
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+
+      $("#add-row").click(function() {
+        $("#dynamic-ingredients-field").append("<tr><td><input type='text' name='name[]' class='form-control' placeholder='Name'></td><td><input type='text' name='brand[]' class='form-control' placeholder='Brand'></td><td><input type='number' name='percentage[]' class='form-control' placeholder='Percentage (%)' step='0.1'></td><td><input type='number' name='qty[]' class='form-control' placeholder='Qty (ml)'></td><td><input type='number' name='price[]' class='form-control' placeholder='Price (/ml)'></td><td><input type='number' name='' class='form-control' disabled></td><td><button type='button' class='btn btn-sm btn-danger remCF'><i class='fas fa-times'></i></button></td></tr>");
+      });
+
+      $("#dynamic-ingredients-field").on('click', '.remCF', function() {
+        $(this).parent().parent().remove();
+      });
+
+      $("#add-row-other-needs").click(function() {
+        $("#dynamic-other-needs-field").append("<tr><td><input type='text' name='name_other_needs[]' class='form-control' placeholder='Name'></td><td><input type='number' name='qty_other_needs[]' class='form-control' placeholder='Qty'></td><td><input type='number' name='price_other_needs[]' class='form-control' placeholder='Price'></td><td><input type='number' name='' class='form-control' disabled></td>><td><button type='button' class='btn btn-sm btn-danger remCF-other-needs'><i class='fas fa-times'></i></button></td></tr>");
+      });
+
+      $("#dynamic-other-needs-field").on('click', '.remCF-other-needs', function() {
+        $(this).parent().parent().remove();
+      });
+
+      function grandTotalIngredients() {
+        var grandTotalIngredients = 0;
+        $('#dynamic-ingredients-field tr').each(function() {
+          // Get current row
+          var row = $(this);
+          row.find('.subTotalIngredients').each(function() {
+            grandTotalIngredients += parseInt($(this).val());
+          })
+        });
+        $('.grandTotalIngredients').val(grandTotalIngredients);
+      }
+
+      var dataIngredients = [];
+
+      $.ajax({
+        method: 'post',
+        url: <?php echo "'" . route('autocompleteIngredients') . "'"; ?>,
+        success: function(result) {
+          dataIngredients = $.map(result.ingredientsList, function(data) {
+            return {
+              text: data.name,
+              id: data.id
+            }
+          });
+          $('.autoIngredients').select2({
+            data: dataIngredients
+          });
+          //update
+          // if($('.selectedAdmin').val() != ""){
+          //   var kode = $('.selectedAdmin').val();
+          //   $('.selectedUser').val(kode);
+          //   $('.selectedUser').select2(dataTeknisiCode, {id: kode, text: kode});
+          // }
+        }
+      });
+
+      $('.autoIngredients').change(function() {
+        var ingredientsId = $(this).val();
+        var tableRow = $(this).closest("tr");
+        var quantityIngredients = $(this).closest("tr").find('.quantityIngredients').val();
+        $.ajax({
+          method: 'post',
+          url: <?php echo "'" . route('searchIngredients') . "'"; ?>,
+          data: {
+            ingredientsId: ingredientsId
+          },
+          dataType: 'json',
+          success: function(result) {
+            tableRow.find('.priceIngredients').val(result.ingredient.price);
+            tableRow.find('.subTotalIngredients').val(result.ingredient.price * quantityIngredients);
+          }
+        });
+        grandTotalIngredients();
+      });
+
+      $('.quantityIngredients').change(function() {
+        var quantityIngredients = $(this).val();
+        var priceIngredients = $(this).closest("tr").find('.priceIngredients').val();
+        var tableRow = $(this).closest("tr");
+        tableRow.find('.subTotalIngredients').val(priceIngredients * quantityIngredients);
+        grandTotalIngredients();
+      });
+
+      $('.priceIngredients').change(function() {
+        var priceIngredients = $(this).val();
+        var quantityIngredients = $(this).closest("tr").find('.quantityIngredients').val();
+        var tableRow = $(this).closest("tr");
+        tableRow.find('.subTotalIngredients').val(priceIngredients * quantityIngredients);
+        grandTotalIngredients();
+      });
+
+    });
+  </script>
 </body>
 
 </html>
