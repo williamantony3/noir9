@@ -134,32 +134,33 @@
       });
 
       $("#add-row").click(function() {
-        $("#dynamic-ingredients-field").append("<tr><td><input type='text' name='name[]' class='form-control' placeholder='Name'></td><td><input type='text' name='brand[]' class='form-control' placeholder='Brand'></td><td><input type='number' name='percentage[]' class='form-control' placeholder='Percentage (%)' step='0.1'></td><td><input type='number' name='qty[]' class='form-control' placeholder='Qty (ml)'></td><td><input type='number' name='price[]' class='form-control' placeholder='Price (/ml)'></td><td><input type='number' name='' class='form-control' disabled></td><td><button type='button' class='btn btn-sm btn-danger remCF'><i class='fas fa-times'></i></button></td></tr>");
+        $("#dynamic-ingredients-field").append("<tr><td style='width: 15%;'><select name='name[]' class='form-control autoIngredients'><option value=''>Choose Name</option></select></td><td><input type='text' name='brand[]' class='form-control' placeholder='Brand'></td><td style='width: 15%;'><div class='input-group'><input type='number' name='percentage[]' class='form-control' step='0.1' value='0.0'><div class='input-group-append'><span class='input-group-text'>%</span></div></div></td><td style='width: 10%;'><div class='input-group'><input type='number' name='qty[]' class='form-control quantityIngredients' placeholder='Qty (ml)' value='0'><div class='input-group-append'><span class='input-group-text'>ml</span></div></div></td><td style='width: 20%;'><div class='input-group'><div class='input-group-prepend'><span class='input-group-text'>Rp</span></div><input type='number' name='price[]' class='form-control priceIngredients' placeholder='Price (/ml)' value='0'><div class='input-group-append'><span class='input-group-text'>/ml</span></div></div></td><td><div class='input-group'><div class='input-group-prepend'><span class='input-group-text'>Rp</span></div><input type='number' name='' class='form-control subTotalIngredients' value='0' disabled></div></td><td><button type='button' class='btn btn-sm btn-danger remCF'><i class='fas fa-times'></i></button></td></tr>");
+        $.ajax({
+          method: 'post',
+          url: <?php echo "'" . route('autocompleteIngredients') . "'"; ?>,
+          success: function(result) {
+            dataIngredients = $.map(result.ingredientsList, function(data) {
+              return {
+                text: data.name,
+                id: data.id
+              }
+            });
+            $('.autoIngredients').select2({
+              data: dataIngredients
+            });
+            //update
+            // if($('.selectedAdmin').val() != ""){
+            //   var kode = $('.selectedAdmin').val();
+            //   $('.selectedUser').val(kode);
+            //   $('.selectedUser').select2(dataTeknisiCode, {id: kode, text: kode});
+            // }
+          }
+        });
       });
 
       $("#dynamic-ingredients-field").on('click', '.remCF', function() {
         $(this).parent().parent().remove();
       });
-
-      $("#add-row-other-needs").click(function() {
-        $("#dynamic-other-needs-field").append("<tr><td><input type='text' name='name_other_needs[]' class='form-control' placeholder='Name'></td><td><input type='number' name='qty_other_needs[]' class='form-control' placeholder='Qty'></td><td><input type='number' name='price_other_needs[]' class='form-control' placeholder='Price'></td><td><input type='number' name='' class='form-control' disabled></td>><td><button type='button' class='btn btn-sm btn-danger remCF-other-needs'><i class='fas fa-times'></i></button></td></tr>");
-      });
-
-      $("#dynamic-other-needs-field").on('click', '.remCF-other-needs', function() {
-        $(this).parent().parent().remove();
-      });
-
-      function grandTotalIngredients() {
-        var grandTotalIngredients = 0;
-        $('#dynamic-ingredients-field tr').each(function() {
-          // Get current row
-          var row = $(this);
-          row.find('.subTotalIngredients').each(function() {
-            grandTotalIngredients += parseInt($(this).val());
-          })
-        });
-        $('.grandTotalIngredients').val(grandTotalIngredients);
-      }
 
       var dataIngredients = [];
 
@@ -185,7 +186,20 @@
         }
       });
 
-      $('.autoIngredients').change(function() {
+      function grandTotalIngredients() {
+        var grandTotalIngredients = 0;
+        $('#dynamic-ingredients-field tr').each(function() {
+          // Get current row
+          var row = $(this);
+          row.find('.subTotalIngredients').each(function() {
+            grandTotalIngredients += parseInt($(this).val());
+          })
+        });
+        $('.grandTotalIngredients').val(grandTotalIngredients);
+      }
+
+      $(document).on('change', '.autoIngredients', function() {
+        console.log('ganti');
         var ingredientsId = $(this).val();
         var tableRow = $(this).closest("tr");
         var quantityIngredients = $(this).closest("tr").find('.quantityIngredients').val();
@@ -204,7 +218,7 @@
         grandTotalIngredients();
       });
 
-      $('.quantityIngredients').change(function() {
+      $(document).on('change', '.quantityIngredients', function() {
         var quantityIngredients = $(this).val();
         var priceIngredients = $(this).closest("tr").find('.priceIngredients').val();
         var tableRow = $(this).closest("tr");
@@ -212,12 +226,20 @@
         grandTotalIngredients();
       });
 
-      $('.priceIngredients').change(function() {
+      $(document).on('change', '.priceIngredients', function() {
         var priceIngredients = $(this).val();
         var quantityIngredients = $(this).closest("tr").find('.quantityIngredients').val();
         var tableRow = $(this).closest("tr");
         tableRow.find('.subTotalIngredients').val(priceIngredients * quantityIngredients);
         grandTotalIngredients();
+      });
+
+      $("#add-row-other-needs").click(function() {
+        $("#dynamic-other-needs-field").append("<tr><td><input type='text' name='name_other_needs[]' class='form-control' placeholder='Name'></td><td><input type='number' name='qty_other_needs[]' class='form-control' placeholder='Qty'></td><td><input type='number' name='price_other_needs[]' class='form-control' placeholder='Price'></td><td><input type='number' name='' class='form-control' disabled></td>><td><button type='button' class='btn btn-sm btn-danger remCF-other-needs'><i class='fas fa-times'></i></button></td></tr>");
+      });
+
+      $("#dynamic-other-needs-field").on('click', '.remCF-other-needs', function() {
+        $(this).parent().parent().remove();
       });
 
     });
