@@ -160,6 +160,8 @@
 
       $("#dynamic-ingredients-field").on('click', '.remCF', function() {
         $(this).parent().parent().remove();
+        grandTotalIngredients();
+        hppTotal();
       });
 
       var dataIngredients = [];
@@ -199,7 +201,6 @@
       }
 
       $(document).on('change', '.autoIngredients', function() {
-        console.log('ganti');
         var ingredientsId = $(this).val();
         var tableRow = $(this).closest("tr");
         var quantityIngredients = $(this).closest("tr").find('.quantityIngredients').val();
@@ -235,12 +236,55 @@
       });
 
       $("#add-row-other-needs").click(function() {
-        $("#dynamic-other-needs-field").append("<tr><td><input type='text' name='name_other_needs[]' class='form-control' placeholder='Name'></td><td><input type='number' name='qty_other_needs[]' class='form-control' placeholder='Qty'></td><td><input type='number' name='price_other_needs[]' class='form-control' placeholder='Price'></td><td><input type='number' name='' class='form-control' disabled></td>><td><button type='button' class='btn btn-sm btn-danger remCF-other-needs'><i class='fas fa-times'></i></button></td></tr>");
+        $("#dynamic-other-needs-field").append("<tr><td><input type='text' name='name_other_needs[]' class='form-control' placeholder='Name'></td><td><input type='number' name='qty_other_needs[]' class='form-control qtyOtherNeeds' placeholder='Qty' step='0.01'></td><td><div class='input-group'><div class='input-group-prepend'><span class='input-group-text'>Rp</span></div><input type='number' name='price_other_needs[]' class='form-control priceOtherNeeds' placeholder='Price'></div></td><td><div class='input-group'><div class='input-group-prepend'><span class='input-group-text'>Rp</span></div><input type='number' name='' class='form-control subTotalOtherNeeds' disabled></div></td><td><button type='button' class='btn btn-sm btn-danger remCF-other-needs'><i class='fas fa-times'></i></button></td></tr>");
       });
 
       $("#dynamic-other-needs-field").on('click', '.remCF-other-needs', function() {
         $(this).parent().parent().remove();
+        grandTotalOtherNeeds();
+        hppTotal();
       });
+
+      function grandTotalOtherNeeds() {
+        var grandTotalOtherNeeds = 0;
+        $('#dynamic-other-needs-field tr').each(function() {
+          // Get current row
+          var row = $(this);
+          row.find('.subTotalOtherNeeds').each(function() {
+            grandTotalOtherNeeds += parseInt($(this).val());
+          })
+        });
+        $('.grandTotalOtherNeeds').val(grandTotalOtherNeeds);
+      }
+
+      $(document).on('change', '.qtyOtherNeeds', function() {
+        var qtyOtherNeeds = $(this).val();
+        var priceOtherNeeds = $(this).closest("tr").find('.priceOtherNeeds').val();
+        var tableRow = $(this).closest("tr");
+        tableRow.find('.subTotalOtherNeeds').val(priceOtherNeeds * qtyOtherNeeds);
+        grandTotalOtherNeeds();
+      });
+
+      $(document).on('change', '.priceOtherNeeds', function() {
+        var priceOtherNeeds = $(this).val();
+        var qtyOtherNeeds = $(this).closest("tr").find('.qtyOtherNeeds').val();
+        var tableRow = $(this).closest("tr");
+        tableRow.find('.subTotalOtherNeeds').val(priceOtherNeeds * qtyOtherNeeds);
+        grandTotalOtherNeeds();
+      });
+
+      function hppTotal(){
+        var grandTotalIngredients = parseInt($('.grandTotalIngredients').val());
+        var grandTotalOtherNeeds = parseInt($('.grandTotalOtherNeeds').val());
+        var cukai = parseInt($('.cukai').val());
+        var contingencyCostPercent = parseInt($('.contingency_cost').val());
+        var contingencyCost = (grandTotalIngredients + grandTotalOtherNeeds + cukai) / 100;
+        var hppTotal = grandTotalIngredients + grandTotalOtherNeeds + cukai + contingencyCost;
+        $('.hppTotal').val(hppTotal);
+      }
+
+      $(document).on('change', '.autoIngredients, .quantityIngredients, .priceIngredients, .priceOtherNeeds, .qtyOtherNeeds, .cukai, .contingency_cost', hppTotal);
+
 
     });
   </script>

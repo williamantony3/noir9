@@ -24,3 +24,6 @@ Route::post('/ingredients/updateIngredients/{ing}',[IngredientsController::class
 Route::post('/ingredients/addIngredients',[IngredientsController::class,'store'])->name('addIngredientsDetail');
 Route::post('/ingredients/autocompleteIngredients',[IngredientsController::class,'autocomplete'])->name('autocompleteIngredients');
 Route::post('/ingredients/searchIngredients',[IngredientsController::class,'search'])->name('searchIngredients');
+
+
+Route::get('/recipes/store', [RecipesController::class, 'store'])->name('storeRecipe');

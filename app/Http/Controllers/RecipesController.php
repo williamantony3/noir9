@@ -12,4 +12,6 @@ class RecipesController extends Controller
     public function add(){
         return view('recipes.add');
     }
+    public function store(Request $request){
+    }
 }
