@@ -22,3 +22,4 @@ Route::get('/ingredients/delete/{ing}',[IngredientsController::class,'destroy'])
 Route::get('/ingredients/{ing}/edit',[IngredientsController::class,'edit'])->name('editIngredients');
 Route::post('/ingredients/updateIngredients/{ing}',[IngredientsController::class,'update'])->name('updateIngredients');
 Route::post('/ingredients/addIngredients',[IngredientsController::class,'store'])->name('addIngredientsDetail');
+Route::get('/ingredients/exportPdf',[IngredientsController::class,'exportPdf'])->name('exportPdf');

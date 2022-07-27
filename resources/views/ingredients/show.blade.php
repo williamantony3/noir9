@@ -11,7 +11,9 @@
             </div>
             <div class="col-lg-6 col-5 text-right">
                 <a href="{{ route('addIngredients') }}" class="btn btn-sm btn-secondary">Add Ingredients</a>
+                <a href="{{ route('exportPdf') }}" class="btn btn-sm btn-secondary">Export to PDF</a>
             </div>
+            <br>
             <br><br>
             <div class="col-lg-12 col-12">
               @if(\Session::has('alert'))
@@ -64,9 +66,9 @@
                     
                     <td class="text-center">{{ $ing['name'] }}</td>
                     <td class="text-center">{{ $ing['price'] }}</td>
-                    <td class="text-center"><a href="{{ route('editIngredients', $ing) }}"><button type="button" class="btn btn-warning btn-sm">Edit</button></a> <a href="#"><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">Delete</button></a></td>
+                    <td class="text-center"><a href="{{ route('editIngredients', $ing) }}"><button type="button" class="btn btn-warning btn-sm">Edit</button></a> 
+                      <a href="#"><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">Delete</button></a></td>
                     </tr>
-                    
                     <!-- Modal -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog modal-dialog-centered" role="document">

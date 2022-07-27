@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Ingredients;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Dompdf\Dompdf;
 
 class IngredientsController extends Controller
 {
@@ -45,5 +47,12 @@ class IngredientsController extends Controller
         $request->session()->flash('deletesuccess', 'Success deleting Ingredient');
         Ingredients::destroy($delIng->id);
         return redirect('/ingredients');
+    }
+    public function exportPdf(){
+        $ingredientsList = Ingredients::all();
+        $pdf = Pdf::loadView('ingredients/showpdf',compact('ingredientsList'));
+        // )-;
+        // return view('ingredients.showpdf',compact('ingredientsList'));
+    	return $pdf->download('test.pdf');
     }
 }
