@@ -54,7 +54,7 @@
                 </div>
                 <div class="form-group">
                   <label for="price" class="form-control-label">Price</label>
-                  <input class="form-control" type="number" id="price" name="price" min='1000'/>
+                  <input class="form-control" type="number" id="price" name="price"/>
                 </div>
                 <div class="form-group">
                   <input type="submit" value="Save" class="btn btn-primary">

@@ -47,12 +47,14 @@
                   </tr>
                 </thead>
                 <tbody>
+                  @php $no = 1; @endphp
+                  @foreach($recipes as $recipe)
                   <tr>
-                    <td class="text-center">1</td>
-                    <td class="text-center">8 Circles</td>
-                    <td class="text-center">Grape Salt</td>
-                    <td class="text-right">25</td>
-                    <td class="text-right">25</td>
+                    <td class="text-center">{{ $no++ }}</td>
+                    <td class="text-center">{{ $recipe->clients_name }}</td>
+                    <td class="text-center">{{ $recipe->flavour }}</td>
+                    <td class="text-right">{{ $recipe->nic_strength }} mg</td>
+                    <td class="text-right">{{ $recipe->volume }} ml</td>
                     <td class="text-center"><a href="#"><button type="button" class="btn btn-default btn-sm">Detail</button></a> <a href="#"><button type="button" class="btn btn-warning btn-sm">Edit</button></a> <a href="#"><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">Delete</button></a></td>
                     <!-- Modal -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -75,6 +77,7 @@
                       </div>
                     </div>
                   </tr>
+                  @endforeach
                 </tbody>
               </table>
             </div>

@@ -16,6 +16,7 @@ use App\Http\Controllers\IngredientsController;
 
 Route::get('/', [RecipesController::class, 'show'])->name('showRecipes');
 Route::get('/recipes/add', [RecipesController::class, 'add'])->name('addRecipes');
+Route::post('/recipes/store', [RecipesController::class, 'store'])->name('storeRecipe');
 Route::get('/ingredients',[IngredientsController::class,'show'])->name('showIngredients');
 Route::get('/ingredients/add',[IngredientsController::class,'add'])->name('addIngredients');
 Route::get('/ingredients/delete/{ing}',[IngredientsController::class,'destroy'])->name('deleteIngredients');
@@ -24,6 +25,3 @@ Route::post('/ingredients/updateIngredients/{ing}',[IngredientsController::class
 Route::post('/ingredients/addIngredients',[IngredientsController::class,'store'])->name('addIngredientsDetail');
 Route::post('/ingredients/autocompleteIngredients',[IngredientsController::class,'autocomplete'])->name('autocompleteIngredients');
 Route::post('/ingredients/searchIngredients',[IngredientsController::class,'search'])->name('searchIngredients');
-
-
-Route::get('/recipes/store', [RecipesController::class, 'store'])->name('storeRecipe');
