@@ -9,7 +9,7 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>NOIR</title>
   <!-- Favicon -->
-  <link rel="icon" href="/img/brand/favicon.png" type="image/x-icon">
+  <link rel="icon" href="/img/brand/logo.jpg" type="image/x-icon">
   <!-- Fonts -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
   <!-- Icons -->
@@ -31,8 +31,8 @@
       <!-- Brand -->
       <div class="sidenav-header d-flex align-items-center">
         <a class="navbar-brand">
-        <!-- <img src="/img/brand/logo.jpg" alt="" srcset="" style="width: 50px; height: 33px;"> -->
-        Menu
+          <!-- <img src="/img/brand/logo.jpg" alt="" srcset="" style="width: 50px; height: 33px;"> -->
+          Menu
         </a>
         <div class="ml-auto">
           <!-- Sidenav toggler -->
@@ -89,7 +89,7 @@
           <ul class="navbar-nav align-items-center ml-auto ml-md-0">
             <li class="nav-item">
               <div class="media align-items-center">
-          <img src="/img/brand/logo.jpg" alt="" srcset="" style="width: 50px; height: 33px;">
+                <img src="/img/brand/logo.jpg" alt="" srcset="" style="width: 50px; height: 33px;">
                 <div class="media-body ml-2 d-none d-lg-block">
                   <span class="mb-0 text-sm  font-weight-bold"></span>
                 </div>
@@ -125,7 +125,169 @@
   <script src="/vendor/select2/dist/js/select2.min.js"></script>
   <!-- Argon JS -->
   <script src="/js/argon.min-v=1.0.0.js"></script>
-  </head>
+  <script>
+    $(document).ready(function() {
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+
+      $("#add-row").click(function() {
+        $("#dynamic-ingredients-field").append("<tr><td style='width: 15%;'><select name='name[]' class='form-control autoIngredients'><option value=''>Choose Name</option></select></td><td><input type='text' name='brand[]' class='form-control' placeholder='Brand'></td><td style='width: 15%;'><div class='input-group'><input type='number' name='percentage[]' class='form-control' step='0.1' value='0.0'><div class='input-group-append'><span class='input-group-text'>%</span></div></div></td><td style='width: 10%;'><div class='input-group'><input type='number' name='qty[]' class='form-control quantityIngredients' placeholder='Qty (ml)' value='0'><div class='input-group-append'><span class='input-group-text'>ml</span></div></div></td><td style='width: 20%;'><div class='input-group'><div class='input-group-prepend'><span class='input-group-text'>Rp</span></div><input type='number' name='price[]' class='form-control priceIngredients' placeholder='Price (/ml)' value='0'><div class='input-group-append'><span class='input-group-text'>/ml</span></div></div></td><td><div class='input-group'><div class='input-group-prepend'><span class='input-group-text'>Rp</span></div><input type='number' name='' class='form-control subTotalIngredients' value='0' disabled></div></td><td><button type='button' class='btn btn-sm btn-danger remCF'><i class='fas fa-times'></i></button></td></tr>");
+        $.ajax({
+          method: 'post',
+          url: <?php echo "'" . route('autocompleteIngredients') . "'"; ?>,
+          success: function(result) {
+            dataIngredients = $.map(result.ingredientsList, function(data) {
+              return {
+                text: data.name,
+                id: data.id
+              }
+            });
+            $('.autoIngredients').select2({
+              data: dataIngredients
+            });
+            //update
+            // if($('.selectedAdmin').val() != ""){
+            //   var kode = $('.selectedAdmin').val();
+            //   $('.selectedUser').val(kode);
+            //   $('.selectedUser').select2(dataTeknisiCode, {id: kode, text: kode});
+            // }
+          }
+        });
+      });
+
+      $("#dynamic-ingredients-field").on('click', '.remCF', function() {
+        $(this).parent().parent().remove();
+        grandTotalIngredients();
+        hppTotal();
+      });
+
+      var dataIngredients = [];
+
+      $.ajax({
+        method: 'post',
+        url: <?php echo "'" . route('autocompleteIngredients') . "'"; ?>,
+        success: function(result) {
+          dataIngredients = $.map(result.ingredientsList, function(data) {
+            return {
+              text: data.name,
+              id: data.id
+            }
+          });
+          $('.autoIngredients').select2({
+            data: dataIngredients
+          });
+          //update
+          // if($('.selectedAdmin').val() != ""){
+          //   var kode = $('.selectedAdmin').val();
+          //   $('.selectedUser').val(kode);
+          //   $('.selectedUser').select2(dataTeknisiCode, {id: kode, text: kode});
+          // }
+        }
+      });
+
+      function grandTotalIngredients() {
+        var grandTotalIngredients = 0;
+        $('#dynamic-ingredients-field tr').each(function() {
+          // Get current row
+          var row = $(this);
+          row.find('.subTotalIngredients').each(function() {
+            grandTotalIngredients += parseInt($(this).val());
+          })
+        });
+        $('.grandTotalIngredients').val(grandTotalIngredients);
+      }
+
+      $(document).on('change', '.autoIngredients', function() {
+        var ingredientsId = $(this).val();
+        var tableRow = $(this).closest("tr");
+        var quantityIngredients = $(this).closest("tr").find('.quantityIngredients').val();
+        $.ajax({
+          method: 'post',
+          url: <?php echo "'" . route('searchIngredients') . "'"; ?>,
+          data: {
+            ingredientsId: ingredientsId
+          },
+          dataType: 'json',
+          success: function(result) {
+            tableRow.find('.priceIngredients').val(result.ingredient.price);
+            tableRow.find('.subTotalIngredients').val(result.ingredient.price * quantityIngredients);
+          }
+        });
+        grandTotalIngredients();
+      });
+
+      $(document).on('change', '.quantityIngredients', function() {
+        var quantityIngredients = $(this).val();
+        var priceIngredients = $(this).closest("tr").find('.priceIngredients').val();
+        var tableRow = $(this).closest("tr");
+        tableRow.find('.subTotalIngredients').val(priceIngredients * quantityIngredients);
+        grandTotalIngredients();
+      });
+
+      $(document).on('change', '.priceIngredients', function() {
+        var priceIngredients = $(this).val();
+        var quantityIngredients = $(this).closest("tr").find('.quantityIngredients').val();
+        var tableRow = $(this).closest("tr");
+        tableRow.find('.subTotalIngredients').val(priceIngredients * quantityIngredients);
+        grandTotalIngredients();
+      });
+
+      $("#add-row-other-needs").click(function() {
+        $("#dynamic-other-needs-field").append("<tr><td><input type='text' name='name_other_needs[]' class='form-control' placeholder='Name'></td><td><input type='number' name='qty_other_needs[]' class='form-control qtyOtherNeeds' placeholder='Qty' step='0.01'></td><td><div class='input-group'><div class='input-group-prepend'><span class='input-group-text'>Rp</span></div><input type='number' name='price_other_needs[]' class='form-control priceOtherNeeds' placeholder='Price'></div></td><td><div class='input-group'><div class='input-group-prepend'><span class='input-group-text'>Rp</span></div><input type='number' name='' class='form-control subTotalOtherNeeds' disabled></div></td><td><button type='button' class='btn btn-sm btn-danger remCF-other-needs'><i class='fas fa-times'></i></button></td></tr>");
+      });
+
+      $("#dynamic-other-needs-field").on('click', '.remCF-other-needs', function() {
+        $(this).parent().parent().remove();
+        grandTotalOtherNeeds();
+        hppTotal();
+      });
+
+      function grandTotalOtherNeeds() {
+        var grandTotalOtherNeeds = 0;
+        $('#dynamic-other-needs-field tr').each(function() {
+          // Get current row
+          var row = $(this);
+          row.find('.subTotalOtherNeeds').each(function() {
+            grandTotalOtherNeeds += parseInt($(this).val());
+          })
+        });
+        $('.grandTotalOtherNeeds').val(grandTotalOtherNeeds);
+      }
+
+      $(document).on('change', '.qtyOtherNeeds', function() {
+        var qtyOtherNeeds = $(this).val();
+        var priceOtherNeeds = $(this).closest("tr").find('.priceOtherNeeds').val();
+        var tableRow = $(this).closest("tr");
+        tableRow.find('.subTotalOtherNeeds').val(priceOtherNeeds * qtyOtherNeeds);
+        grandTotalOtherNeeds();
+      });
+
+      $(document).on('change', '.priceOtherNeeds', function() {
+        var priceOtherNeeds = $(this).val();
+        var qtyOtherNeeds = $(this).closest("tr").find('.qtyOtherNeeds').val();
+        var tableRow = $(this).closest("tr");
+        tableRow.find('.subTotalOtherNeeds').val(priceOtherNeeds * qtyOtherNeeds);
+        grandTotalOtherNeeds();
+      });
+
+      function hppTotal(){
+        var grandTotalIngredients = parseInt($('.grandTotalIngredients').val());
+        var grandTotalOtherNeeds = parseInt($('.grandTotalOtherNeeds').val());
+        var cukai = parseInt($('.cukai').val());
+        var contingencyCostPercent = parseInt($('.contingency_cost').val());
+        var contingencyCost = (grandTotalIngredients + grandTotalOtherNeeds + cukai) / 100;
+        var hppTotal = grandTotalIngredients + grandTotalOtherNeeds + cukai + contingencyCost;
+        $('.hppTotal').val(hppTotal);
+      }
+
+      $(document).on('change', '.autoIngredients, .quantityIngredients, .priceIngredients, .priceOtherNeeds, .qtyOtherNeeds, .cukai, .contingency_cost', hppTotal);
+
+
+    });
+  </script>
 </body>
 
 </html>

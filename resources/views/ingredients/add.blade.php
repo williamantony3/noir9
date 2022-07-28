@@ -54,7 +54,7 @@
                 </div>
                 <div class="form-group">
                   <label for="price" class="form-control-label">Price</label>
-                  <input class="form-control" type="number" id="price" name="price" min='1000'/>
+                  <input class="form-control" type="number" id="price" name="price"/>
                 </div>
                 <div class="form-group float-right">
                   <a href="{{ route('showIngredients') }}"><input type="button" value="Cancel" class="btn btn-danger"></a>
