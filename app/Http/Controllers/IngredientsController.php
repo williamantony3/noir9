@@ -55,4 +55,12 @@ class IngredientsController extends Controller
         // return view('ingredients.showpdf',compact('ingredientsList'));
     	return $pdf->download('test.pdf');
     }
+    public function autocomplete(){
+        $ingredientsList = Ingredients::all();
+        return response()->json(['ingredientsList' => $ingredientsList]);
+    }
+    public function search(Request $request){
+        $ingredient = Ingredients::find($request->ingredientsId);
+        return response()->json(['ingredient' => $ingredient]);
+    }
 }
