@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class OtherNeeds extends Model
 {
     use HasFactory;
+    protected $table = 'other_needs';
+
 }

@@ -278,7 +278,7 @@
         var grandTotalOtherNeeds = parseInt($('.grandTotalOtherNeeds').val());
         var cukai = parseInt($('.cukai').val());
         var contingencyCostPercent = parseInt($('.contingency_cost').val());
-        var contingencyCost = (grandTotalIngredients + grandTotalOtherNeeds + cukai) / 100;
+        var contingencyCost = Math.ceil((grandTotalIngredients + grandTotalOtherNeeds + cukai) * contingencyCostPercent / 100);
         var hppTotal = grandTotalIngredients + grandTotalOtherNeeds + cukai + contingencyCost;
         $('.hppTotal').val(hppTotal);
       }

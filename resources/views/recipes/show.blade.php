@@ -41,8 +41,8 @@
                     <th>No</th>
                     <th>Client's Name</th>
                     <th>Flavour</th>
-                    <th>Nic Strength (mg)</th>
-                    <th>Volume (ml)</th>
+                    <th>Nic Strength</th>
+                    <th>Volume</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -55,7 +55,7 @@
                     <td class="text-center">{{ $recipe->flavour }}</td>
                     <td class="text-right">{{ $recipe->nic_strength }} mg</td>
                     <td class="text-right">{{ $recipe->volume }} ml</td>
-                    <td class="text-center"><a href="#"><button type="button" class="btn btn-default btn-sm">Detail</button></a> <a href="#"><button type="button" class="btn btn-warning btn-sm">Edit</button></a> <a href="#"><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">Delete</button></a></td>
+                    <td class="text-center"><a href="{{ route('detailRecipe', $recipe) }}"><button type="button" class="btn btn-default btn-sm">Detail</button></a> <a href="#"><button type="button" class="btn btn-warning btn-sm">Edit</button></a> <a href="#"><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">Delete</button></a></td>
                     <!-- Modal -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog modal-dialog-centered" role="document">

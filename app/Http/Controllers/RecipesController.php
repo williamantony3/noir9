@@ -10,12 +10,14 @@ use Illuminate\Http\Request;
 class RecipesController extends Controller
 {
     public function show(){
-        $recipes = Recipes::all();
+        $recipes = Recipes::orderBy('id', 'DESC')->get();
         return view('recipes.show', ['recipes' => $recipes]);
     }
+
     public function add(){
         return view('recipes.add');
     }
+    
     public function store(Request $request){
         $validatedData = $request->validate([
             'clients_name'=>'required',
@@ -43,8 +45,14 @@ class RecipesController extends Controller
             $otherNeeds->name = $request->name_other_needs[$i];
             $otherNeeds->qty = $request->qty_other_needs[$i];
             $otherNeeds->price = $request->price_other_needs[$i];
+            $otherNeeds->recipe_id = $recipe->id;
             $otherNeeds->save();
         }
         return redirect()->route('showRecipes')->with('alert-success', 'Recipe successfully added');
+    }
+
+    public function detail(Recipes $recipe){
+        $recipe = Recipes::find($recipe->id);
+        return view('recipes.detail', ['recipe' => $recipe]);
     }
 }

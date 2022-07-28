@@ -36,6 +36,7 @@ class ComposerStaticInit5994d3b51eba530410a4ab5045b4cdbe
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
         'ed962a97bd972bc82007176b647d4e36' => __DIR__ . '/..' . '/facade/ignition/src/helpers.php',
+        'b4e3f29b106af37a2bb239f73cdf68c7' => __DIR__ . '/../..' . '/app/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -576,6 +577,7 @@ class ComposerStaticInit5994d3b51eba530410a4ab5045b4cdbe
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Models\\Ingredients' => __DIR__ . '/../..' . '/app/Models/Ingredients.php',
+        'App\\Models\\OtherNeeds' => __DIR__ . '/../..' . '/app/Models/OtherNeeds.php',
         'App\\Models\\RecipeDetails' => __DIR__ . '/../..' . '/app/Models/RecipeDetails.php',
         'App\\Models\\Recipes' => __DIR__ . '/../..' . '/app/Models/Recipes.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
