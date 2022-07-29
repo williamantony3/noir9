@@ -51,8 +51,8 @@
                   @foreach($recipes as $recipe)
                   <tr>
                     <td class="text-center">{{ $no++ }}</td>
-                    <td class="text-center">{{ $recipe->clients_name }}</td>
-                    <td class="text-center">{{ $recipe->flavour }}</td>
+                    <td class="text-left">{{ $recipe->clients_name }}</td>
+                    <td class="text-left">{{ $recipe->flavour }}</td>
                     <td class="text-right">{{ $recipe->nic_strength }} mg</td>
                     <td class="text-right">{{ $recipe->volume }} ml</td>
                     <td class="text-center"><a href="{{ route('detailRecipe', $recipe) }}"><button type="button" class="btn btn-default btn-sm">Detail</button></a> <a href="#"><button type="button" class="btn btn-warning btn-sm">Edit</button></a> <a href="#"><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">Delete</button></a></td>
@@ -61,17 +61,17 @@
                       <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Konfirmasi</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
                           <div class="modal-body">
-                            Anda yakin ingin melakukan ini?
+                            Do you want to delete?
                           </div>
                           <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                            <a href="#"><button type="button" class="btn btn-danger">Hapus</button></a>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
+                            <a href="{{ route('deleteRecipe', $recipe) }}"><button type="button" class="btn btn-danger">Delete</button></a>
                           </div>
                         </div>
                       </div>

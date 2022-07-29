@@ -10,8 +10,7 @@
               <h6 class="h2 text-white d-inline-block mb-0">Recipes</h6>
             </div>
             <div class="col-lg-6 col-5 text-right">
-                <a href="{{ route('addIngredients') }}" class="btn btn-sm btn-secondary">Add Ingredients</a>
-                <a href="{{ route('exportPdf') }}" class="btn btn-sm btn-secondary">Export to PDF</a>
+                <a href="{{ route('addIngredients') }}" class="btn btn-sm btn-secondary">Add Ingredient</a>
             </div>
             <br>
             <br><br>
@@ -64,8 +63,8 @@
                     <tr>
                     <td class="text-center">{{ $rowNum++ }} </td>
                     
-                    <td class="text-center">{{ $ing['name'] }}</td>
-                    <td class="text-center">{{ $ing['price'] }}</td>
+                    <td class="text-left">{{ $ing['name'] }}</td>
+                    <td class="text-right">{{ rupiah($ing['price']) }}</td>
                     <td class="text-center"><a href="{{ route('editIngredients', $ing) }}"><button type="button" class="btn btn-warning btn-sm">Edit</button></a> 
                       <a href="#"><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">Delete</button></a></td>
                     </tr>

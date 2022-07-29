@@ -134,7 +134,7 @@
       });
 
       $("#add-row").click(function() {
-        $("#dynamic-ingredients-field").append("<tr><td style='width: 15%;'><select name='name[]' class='form-control autoIngredients'><option value=''>Choose Name</option></select></td><td><input type='text' name='brand[]' class='form-control' placeholder='Brand'></td><td style='width: 15%;'><div class='input-group'><input type='number' name='percentage[]' class='form-control' step='0.1' value='0.0'><div class='input-group-append'><span class='input-group-text'>%</span></div></div></td><td style='width: 10%;'><div class='input-group'><input type='number' name='qty[]' class='form-control quantityIngredients' placeholder='Qty (ml)' value='0'><div class='input-group-append'><span class='input-group-text'>ml</span></div></div></td><td style='width: 20%;'><div class='input-group'><div class='input-group-prepend'><span class='input-group-text'>Rp</span></div><input type='number' name='price[]' class='form-control priceIngredients' placeholder='Price (/ml)' value='0'><div class='input-group-append'><span class='input-group-text'>/ml</span></div></div></td><td><div class='input-group'><div class='input-group-prepend'><span class='input-group-text'>Rp</span></div><input type='number' name='' class='form-control subTotalIngredients' value='0' disabled></div></td><td><button type='button' class='btn btn-sm btn-danger remCF'><i class='fas fa-times'></i></button></td></tr>");
+        $("#dynamic-ingredients-field").append("<tr><td style='width: 15%;'><select name='name[]' class='form-control autoIngredients'><option value=''>Choose Name</option></select></td><td><input type='text' name='brand[]' class='form-control' placeholder='Brand'></td><td style='width: 15%;'><div class='input-group'><input type='number' name='percentage[]' class='form-control percentIngredients' step='0.1' value='0.0'><div class='input-group-append'><span class='input-group-text'>%</span></div></div></td><td style='width: 10%;'><div class='input-group'><input type='number' name='qty[]' class='form-control quantityIngredients' placeholder='Qty (ml)' value='0'><div class='input-group-append'><span class='input-group-text'>ml</span></div></div></td><td style='width: 20%;'><div class='input-group'><div class='input-group-prepend'><span class='input-group-text'>Rp</span></div><input type='number' name='price[]' class='form-control priceIngredients' placeholder='Price (/ml)' value='0'><div class='input-group-append'><span class='input-group-text'>/ml</span></div></div></td><td><div class='input-group'><div class='input-group-prepend'><span class='input-group-text'>Rp</span></div><input type='number' name='' class='form-control subTotalIngredients' value='0' disabled></div></td><td><button type='button' class='btn btn-sm btn-danger remCF'><i class='fas fa-times'></i></button></td></tr>");
         $.ajax({
           method: 'post',
           url: <?php echo "'" . route('autocompleteIngredients') . "'"; ?>,
@@ -203,7 +203,8 @@
       $(document).on('change', '.autoIngredients', function() {
         var ingredientsId = $(this).val();
         var tableRow = $(this).closest("tr");
-        var quantityIngredients = $(this).closest("tr").find('.quantityIngredients').val();
+        var percentIngredients = $(this).closest("tr").find('.percentIngredients').val();
+        var volume = $('.volume').val();
         $.ajax({
           method: 'post',
           url: <?php echo "'" . route('searchIngredients') . "'"; ?>,
@@ -213,25 +214,27 @@
           dataType: 'json',
           success: function(result) {
             tableRow.find('.priceIngredients').val(result.ingredient.price);
-            tableRow.find('.subTotalIngredients').val(result.ingredient.price * quantityIngredients);
+            tableRow.find('.subTotalIngredients').val(result.ingredient.price * percentIngredients / 100 * volume);
           }
         });
         grandTotalIngredients();
       });
 
-      $(document).on('change', '.quantityIngredients', function() {
-        var quantityIngredients = $(this).val();
+      $(document).on('change', '.percentIngredients', function() {
+        var percentIngredients = $(this).val();
         var priceIngredients = $(this).closest("tr").find('.priceIngredients').val();
+        var volume = $('.volume').val();
         var tableRow = $(this).closest("tr");
-        tableRow.find('.subTotalIngredients').val(priceIngredients * quantityIngredients);
+        tableRow.find('.subTotalIngredients').val(priceIngredients * percentIngredients / 100 * volume);
         grandTotalIngredients();
       });
 
       $(document).on('change', '.priceIngredients', function() {
         var priceIngredients = $(this).val();
-        var quantityIngredients = $(this).closest("tr").find('.quantityIngredients').val();
+        var percentIngredients = $(this).closest("tr").find('.percentIngredients').val();
+        var volume = $('.volume').val();
         var tableRow = $(this).closest("tr");
-        tableRow.find('.subTotalIngredients').val(priceIngredients * quantityIngredients);
+        tableRow.find('.subTotalIngredients').val(priceIngredients * percentIngredients / 100 * volume);
         grandTotalIngredients();
       });
 
@@ -280,6 +283,7 @@
         var contingencyCostPercent = parseInt($('.contingency_cost').val());
         var contingencyCost = Math.ceil((grandTotalIngredients + grandTotalOtherNeeds + cukai) * contingencyCostPercent / 100);
         var hppTotal = grandTotalIngredients + grandTotalOtherNeeds + cukai + contingencyCost;
+        $('.calculated_cont_cost').val(contingencyCost);
         $('.hppTotal').val(hppTotal);
       }
 

@@ -53,7 +53,7 @@
                   @enderror
                 </div>
                 <div class="form-group">
-                  <label for="price" class="form-control-label">Price</label>
+                  <label for="price" class="form-control-label">Price (Rp)</label>
                   <input class="form-control" type="number" id="price" name="price"/>
                 </div>
                 <div class="form-group float-right">

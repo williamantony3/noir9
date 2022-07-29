@@ -18,6 +18,7 @@ Route::get('/', [RecipesController::class, 'show'])->name('showRecipes');
 Route::get('/recipes/add', [RecipesController::class, 'add'])->name('addRecipes');
 Route::post('/recipes/store', [RecipesController::class, 'store'])->name('storeRecipe');
 Route::get('/recipes/detail/{recipe}', [RecipesController::class, 'detail'])->name('detailRecipe');
+Route::get('/recipes/delete/{recipe}', [RecipesController::class, 'delete'])->name('deleteRecipe');
 Route::get('/ingredients',[IngredientsController::class,'show'])->name('showIngredients');
 Route::get('/ingredients/add',[IngredientsController::class,'add'])->name('addIngredients');
 Route::get('/ingredients/delete/{ing}',[IngredientsController::class,'destroy'])->name('deleteIngredients');

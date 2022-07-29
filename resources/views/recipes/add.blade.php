@@ -56,11 +56,7 @@
             </div>
             <div class="form-group">
               <label for="volume" class="form-control-label">Volume (ml)</label>
-              <input class="form-control" type="number" id="volume" name="volume" required />
-            </div>
-            <div class="form-group">
-              <label for="cukai" class="form-control-label">Cukai (Rp)</label>
-              <input class="form-control cukai" type="number" id="cukai" name="cukai" required />
+              <input class="form-control volume" type="number" id="volume" name="volume" required />
             </div>
             <div class="form-group">
               <label for="contingency_cost" class="form-control-label">Contingency Cost (%)</label>
@@ -88,7 +84,7 @@
                       <td><input type='text' name='brand[]' class='form-control' placeholder='Brand' required></td>
                       <td style='width: 15%;'>
                         <div class='input-group'>
-                          <input type='number' name='percentage[]' class='form-control' step='0.1' value="0.0" required>
+                          <input type='number' name='percentage[]' class='form-control percentIngredients' step='0.1' value="0.0" required>
                           <div class='input-group-append'>
                             <span class='input-group-text'>%</span>
                           </div>
@@ -186,6 +182,30 @@
                             <span class='input-group-text'>Rp</span>
                           </div>
                           <input type='number' name='' class='form-control grandTotalOtherNeeds' disabled>
+                        </div>
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" class="text-right" style="padding: 10px;">Cukai</td>
+                      <td>
+                        <div class="input-group">
+                          <div class='input-group-prepend'>
+                            <span class='input-group-text'>Rp</span>
+                          </div>
+                        <input class="form-control cukai" type="number" id="cukai" name="cukai" required />
+                        </div>
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" class="text-right" style="padding: 10px;">Contingency Cost</td>
+                      <td>
+                        <div class="input-group">
+                          <div class='input-group-prepend'>
+                            <span class='input-group-text'>Rp</span>
+                          </div>
+                        <input class="form-control calculated_cont_cost" type="number" id="calculated_cont_cost" name="calculated_cont_cost" disabled />
                         </div>
                       </td>
                       <td></td>

@@ -11,7 +11,7 @@ use Dompdf\Dompdf;
 class IngredientsController extends Controller
 {
     public function show(){
-        $ingredientsList = Ingredients::all();
+        $ingredientsList = Ingredients::orderBy('id', 'DESC')->get();
         return view('ingredients.show',compact('ingredientsList'));
     }
     public function add(){

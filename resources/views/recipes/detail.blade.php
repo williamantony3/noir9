@@ -77,14 +77,14 @@
               @php $total = 0; @endphp
               @foreach($recipe->recipeDetails as $recipeDetail)
               <tr>
-                <td class="text-center">{{ $recipeDetail->ingredients->name }}</td>
-                <td class="text-center">{{ $recipeDetail->brand }}</td>
+                <td class="text-left">{{ $recipeDetail->ingredients->name }}</td>
+                <td class="text-left">{{ $recipeDetail->brand }}</td>
                 <td class="text-right">{{ $recipeDetail->percentage }} %</td>
                 <td class="text-right">{{ $recipeDetail->qty }} ml</td>
                 <td class="text-right">{{ rupiah($recipeDetail->price) }} /ml</td>
-                <td class="text-right">{{ rupiah($recipeDetail->qty * $recipeDetail->price) }}</td>
+                <td class="text-right">{{ rupiah($recipe->volume * $recipeDetail->percentage / 100 * $recipeDetail->price) }}</td>
               </tr>
-              @php $total += $recipeDetail->qty * $recipeDetail->price; @endphp
+              @php $total += $recipe->volume * $recipeDetail->percentage / 100 * $recipeDetail->price; @endphp
               @endforeach
             </tbody>
             <tfoot>
@@ -114,7 +114,7 @@
               @php $otherNeedTotal = 0; @endphp
               @foreach($recipe->otherNeeds as $otherNeed)
               <tr>
-                <td class="text-center">{{ $otherNeed->name }}</td>
+                <td class="text-left">{{ $otherNeed->name }}</td>
                 <td class="text-right">{{ $otherNeed->qty }}</td>
                 <td class="text-right">{{ rupiah($otherNeed->price) }}</td>
                 <td class="text-right">{{ rupiah($otherNeed->qty * $otherNeed->price) }}</td>
@@ -123,6 +123,10 @@
               @endforeach
             </tbody>
             <tfoot>
+              <tr class="text-right">
+                <td colspan="3"><b>TOTAL</b></td>
+                <td><b>{{ rupiah($otherNeedTotal) }}</b></td>
+              </tr>
               <tr class="text-right">
                 <td colspan="3"><b>Cukai</b></td>
                 <td><b>{{ rupiah($recipe->cukai) }}</b></td>
@@ -134,15 +138,22 @@
               </tr>
               @php $otherNeedTotal += ceil(($total + $otherNeedTotal) * $recipe->contingency_cost / 100); @endphp
               <tr class="text-right">
-                <td colspan="3"><b>TOTAL</b></td>
-                <td><b>{{ rupiah($otherNeedTotal) }}</b></td>
-              </tr>
-              <tr class="text-right">
                 <td colspan="3"><b>HPP TOTAL</b></td>
                 <td><b>{{ rupiah($total + $otherNeedTotal) }}</b></td>
               </tr>
             </tfoot>
           </table>
+        </div>
+        
+        <div class="card-body">
+        <div class="row">
+              <div class="col-6"></div>
+              <div class="col-6 text-right">
+                <a href="{{ url()->previous() }}" class="btn btn-danger">Back</a>
+                <a href="{{ route('exportPdf') }}" class="btn btn-primary">Export PDF</a>
+              </div>
+            </div>
+
         </div>
       </div>
     </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ingredients;
 use App\Models\OtherNeeds;
 use App\Models\RecipeDetails;
 use App\Models\Recipes;
@@ -54,5 +55,12 @@ class RecipesController extends Controller
     public function detail(Recipes $recipe){
         $recipe = Recipes::find($recipe->id);
         return view('recipes.detail', ['recipe' => $recipe]);
+    }
+
+    public function delete(Recipes $recipe){
+        Recipes::destroy($recipe->id);
+        OtherNeeds::where('recipe_id', $recipe->id)->delete();
+        RecipeDetails::where('recipe_id', $recipe->id)->delete();
+        return redirect()->route('showRecipes')->with('alert-success', 'Recipe successfully deleted');
     }
 }
