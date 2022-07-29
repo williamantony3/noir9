@@ -7,7 +7,7 @@
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-white d-inline-block mb-0">Recipes</h6>
+              <h6 class="h2 text-white d-inline-block mb-0">Ingredients</h6>
             </div>
             <div class="col-lg-6 col-5 text-right">
                 <a href="{{ route('addIngredients') }}" class="btn btn-sm btn-secondary">Add Ingredient</a>
@@ -73,17 +73,17 @@
                       <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Konfirmasi</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
                           <div class="modal-body">
-                            Anda yakin ingin melakukan ini?
+                            Do you want to delete?
                           </div>
                           <div class="modal-footer">
-                            <a href="{{ route('showIngredients') }}"><button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button></a>
-                            <a href="{{ route('deleteIngredients',$ing)}}"><button type="button" class="btn btn-danger">Hapus</button></a>
+                            <a href="{{ route('showIngredients') }}"><button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button></a>
+                            <a href="{{ route('deleteIngredients',$ing)}}"><button type="button" class="btn btn-danger">Delete</button></a>
                           </div>
                         </div>
                       </div>
