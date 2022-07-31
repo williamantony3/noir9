@@ -9,19 +9,19 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>NOIR</title>
   <!-- Favicon -->
-  <link rel="icon" href="/img/brand/logo.jpg" type="image/x-icon">
+  <link rel="icon" href="{{ url('/img/brand/logo.jpg') }}" type="image/x-icon">
   <!-- Fonts -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
   <!-- Icons -->
-  <link rel="stylesheet" href="/vendor/nucleo/css/nucleo.css" type="text/css">
-  <link rel="stylesheet" href="/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+  <link rel="stylesheet" href="{{ url('/vendor/nucleo/css/nucleo.css') }}" type="text/css">
+  <link rel="stylesheet" href="{{ url('/vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" type="text/css">
   <!-- Page plugins -->
-  <link rel="stylesheet" href="/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
-  <link rel="stylesheet" href="/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
-  <link rel="stylesheet" href="/vendor/select2/dist/css/select2.min.css">
+  <link rel="stylesheet" href="{{ url('/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ url('/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ url('/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ url('/vendor/select2/dist/css/select2.min.css') }}">
   <!-- Argon CSS -->
-  <link rel="stylesheet" href="/css/argon.min-v=1.0.0.css" type="text/css">
+  <link rel="stylesheet" href="{{ url('/css/argon.min-v=1.0.0.css') }}" type="text/css">
 </head>
 
 <body>
@@ -89,7 +89,7 @@
           <ul class="navbar-nav align-items-center ml-auto ml-md-0">
             <li class="nav-item">
               <div class="media align-items-center">
-                <img src="/img/brand/logo.jpg" alt="" srcset="" style="width: 50px; height: 33px;">
+                <img src="{{ url('/img/brand/logo.jpg') }}" alt="" srcset="" style="width: 50px; height: 33px;">
                 <div class="media-body ml-2 d-none d-lg-block">
                   <span class="mb-0 text-sm  font-weight-bold"></span>
                 </div>
@@ -104,27 +104,27 @@
   </div>
   <!-- Argon Scripts -->
   <!-- Core -->
-  <script src="/vendor/jquery/dist/jquery.min.js"></script>
-  <script src="/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="/vendor/js-cookie/js.cookie.js"></script>
-  <script src="/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
-  <script src="/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
-  <script src="/vendor/lavalamp/js/jquery.lavalamp.min.js"></script>
+  <script src="{{ url('/vendor/jquery/dist/jquery.min.js') }}"></script>
+  <script src="{{ url('/vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url('/vendor/js-cookie/js.cookie.js') }}"></script>
+  <script src="{{ url('/vendor/jquery.scrollbar/jquery.scrollbar.min.js') }}"></script>
+  <script src="{{ url('/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js') }}"></script>
+  <script src="{{ url('/vendor/lavalamp/js/jquery.lavalamp.min.js') }}"></script>
   <!-- Optional JS -->
-  <script src="/vendor/chart.js/dist/Chart.min.js"></script>
-  <script src="/vendor/chart.js/dist/Chart.extension.js"></script>
-  <script src="/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
-  <script src="/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-  <script src="/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-  <script src="/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
-  <script src="/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
-  <script src="/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
-  <script src="/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
+  <script src="{{ url('/vendor/chart.js/dist/Chart.min.js') }}"></script>
+  <script src="{{ url('/vendor/chart.js/dist/Chart.extension.js') }}"></script>
+  <script src="{{ url('/vendor/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ url('/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+  <script src="{{ url('/vendor/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+  <script src="{{ url('/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js') }}"></script>
+  <script src="{{ url('/vendor/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
+  <script src="{{ url('/vendor/datatables.net-buttons/js/buttons.flash.min.js') }}"></script>
+  <script src="{{ url('/vendor/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
   <!-- <script src="/vendor/datatables.net-select/js/dataTables.select.min.js"></script> -->
-  <script src="/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-  <script src="/vendor/select2/dist/js/select2.min.js"></script>
+  <script src="{{ url('/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+  <script src="{{ url('/vendor/select2/dist/js/select2.min.js') }}"></script>
   <!-- Argon JS -->
-  <script src="/js/argon.min-v=1.0.0.js"></script>
+  <script src="{{ url('/js/argon.min-v=1.0.0.js') }}"></script>
   <script>
     $(document).ready(function() {
       $.ajaxSetup({
