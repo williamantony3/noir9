@@ -148,12 +148,6 @@
             $('.autoIngredients').select2({
               data: dataIngredients
             });
-            //update
-            // if($('.selectedAdmin').val() != ""){
-            //   var kode = $('.selectedAdmin').val();
-            //   $('.selectedUser').val(kode);
-            //   $('.selectedUser').select2(dataTeknisiCode, {id: kode, text: kode});
-            // }
           }
         });
       });
@@ -179,12 +173,6 @@
           $('.autoIngredients').select2({
             data: dataIngredients
           });
-          //update
-          // if($('.selectedAdmin').val() != ""){
-          //   var kode = $('.selectedAdmin').val();
-          //   $('.selectedUser').val(kode);
-          //   $('.selectedUser').select2(dataTeknisiCode, {id: kode, text: kode});
-          // }
         }
       });
 
@@ -238,6 +226,18 @@
         grandTotalIngredients();
       });
 
+      $(document).on('change', '.volume', function() {
+        var volume = $(this).val();
+        $('#dynamic-ingredients-field tr').each(function() {
+          // Get current row
+          var row = $(this);
+          var priceIngredients = row.find('.priceIngredients').val();
+          var percentIngredients = row.find('.percentIngredients').val();
+          row.find('.subTotalIngredients').val(priceIngredients * percentIngredients / 100 * volume)
+        });
+        grandTotalIngredients();
+      });
+
       $("#add-row-other-needs").click(function() {
         $("#dynamic-other-needs-field").append("<tr><td><input type='text' name='name_other_needs[]' class='form-control' placeholder='Name'></td><td><input type='number' name='qty_other_needs[]' class='form-control qtyOtherNeeds' placeholder='Qty' step='0.01'></td><td><div class='input-group'><div class='input-group-prepend'><span class='input-group-text'>Rp</span></div><input type='number' name='price_other_needs[]' class='form-control priceOtherNeeds' placeholder='Price'></div></td><td><div class='input-group'><div class='input-group-prepend'><span class='input-group-text'>Rp</span></div><input type='number' name='' class='form-control subTotalOtherNeeds' disabled></div></td><td><button type='button' class='btn btn-sm btn-danger remCF-other-needs'><i class='fas fa-times'></i></button></td></tr>");
       });
@@ -276,7 +276,7 @@
         grandTotalOtherNeeds();
       });
 
-      function hppTotal(){
+      function hppTotal() {
         var grandTotalIngredients = parseInt($('.grandTotalIngredients').val());
         var grandTotalOtherNeeds = parseInt($('.grandTotalOtherNeeds').val());
         var cukai = parseInt($('.cukai').val());
@@ -287,9 +287,7 @@
         $('.hppTotal').val(hppTotal);
       }
 
-      $(document).on('change', '.autoIngredients, .quantityIngredients, .priceIngredients, .priceOtherNeeds, .qtyOtherNeeds, .cukai, .contingency_cost', hppTotal);
-
-
+      $(document).on('change', '.autoIngredients, .quantityIngredients, .priceIngredients, .priceOtherNeeds, .qtyOtherNeeds, .cukai, .contingency_cost, .volume', hppTotal);
     });
   </script>
 </body>

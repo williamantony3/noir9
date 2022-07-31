@@ -150,7 +150,7 @@
               <div class="col-6"></div>
               <div class="col-6 text-right">
                 <a href="{{ url()->previous() }}" class="btn btn-danger">Back</a>
-                <a href="{{ route('exportPdf') }}" class="btn btn-primary">Export PDF</a>
+                <a href="{{ route('exportRecipe', $recipe) }}" class="btn btn-primary">Export PDF</a>
               </div>
             </div>
 

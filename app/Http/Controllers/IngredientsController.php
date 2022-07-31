@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Ingredients;
+use App\Models\RecipeDetails;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Dompdf\Dompdf;
 
@@ -46,6 +47,7 @@ class IngredientsController extends Controller
         $delIng = $ing;
         $request->session()->flash('deletesuccess', 'Success deleting Ingredient');
         Ingredients::destroy($delIng->id);
+        RecipeDetails::where('ingredient_id', $delIng->id)->delete();
         return redirect('/ingredients');
     }
     public function exportPdf(){
